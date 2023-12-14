@@ -42,6 +42,13 @@ Adafruit_APDS9960 apds;
 WiFiClient net;
 MQTTClient client;
 
+char client_name[] = "d";
+char client_login[] = "";
+char client_pwd[] = "";
+
+char WiFi_SSID [] = "";
+char WiFi_pwd [] = "";
+
 /********************************************/
 /*!
  @brief Connect ESP32 to wifi and MQTT cleint
@@ -53,7 +60,7 @@ void connectToWifiAndClient() {
   }
   Serial.println("Wifi connected");
 
-  while (!client.connect("xzaple41@stud.fit.vutbr.cz", "MrBigMlokCZ", "rZPIHpuB-w0KZxmQb")) {
+  while (!client.connect(client_name, client_login, client_pwd)) {
     delay(1000);
   }
   Serial.println("Connected to MQTT client");
@@ -618,7 +625,7 @@ void setup() {
   apds.enableProximity(true);
   apds.enableGesture(true);
 
-  WiFi.begin("HomeNet_zapl","lachtann");
+  WiFi.begin(WiFi_SSID,WiFi_pwd);
 
   client.begin("node02.myqtthub.com", net);
   client.onMessage(messageReceived);
